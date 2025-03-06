@@ -1,8 +1,8 @@
 
-import {Wand2} from "lucide-react";
+import Image from "next/image";
 
 export default function AppLogoIcon() {
     return (
-        <Wand2 className="h-4 w-4 text-background" />
+        <Image src="/nsprologo.svg" alt="NSPROS's" width={32} height={32} />
     );
 }

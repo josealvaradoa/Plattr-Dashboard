@@ -165,7 +165,7 @@ const RegisterForm = () => {
           </form>
         </Form>
       </CardContent>
-      <CardFooter className="flex flex-col gap-y-4">
+      {/* <CardFooter className="flex flex-col gap-y-4">
         <div className="text-muted-foreground text-center text-sm">
           Or continue with
         </div>
@@ -174,7 +174,7 @@ const RegisterForm = () => {
           <GoogleSignInButton />
           <FacebookSignInButton />
         </div>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 };

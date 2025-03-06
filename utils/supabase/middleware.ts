@@ -46,6 +46,9 @@ export const updateSession = async (request: NextRequest) => {
     if (request.nextUrl.pathname.startsWith("/settings") && user.error) {
       return NextResponse.redirect(new URL("/sign-in", request.url));
     }
+    if (request.nextUrl.pathname.startsWith("/attendees") && user.error) {
+      return NextResponse.redirect(new URL("/sign-in", request.url));
+    }
 
     // if user is logged in, redirect to dashboard
     if (request.nextUrl.pathname === "/" && !user.error) {
