@@ -19,16 +19,12 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import { signUpAction } from "@/app/actions/actions";
 import { toast } from "sonner";
 import { useState } from "react";
-import GoogleSignInButton from "@/components/auth/google-sign-in-button";
-import { GitHubSignInButton } from "@/components/auth/github-sign-in-button";
-import FacebookSignInButton from "@/components/auth/facebook-sign-in-button";
 
 const RegisterForm = () => {
   const [formMessage, setFormMessage] = useState("");
@@ -46,7 +42,6 @@ const RegisterForm = () => {
 
   const onSubmit = async (data: SignUpFormValues) => {
     try {
-      // Handle sign in logic here
       const formData = new FormData();
       formData.append("email", data.email);
       formData.append("password", data.password);
@@ -73,108 +68,106 @@ const RegisterForm = () => {
   const { isSubmitting } = form.formState;
 
   return (
-    <Card className="rounded-xl gap-y-2">
-      <CardHeader className="px-10 pt-8 pb-0 text-center">
-        <CardTitle className="text-xl">Sign Up</CardTitle>
-        <CardDescription>Create a new account</CardDescription>
-        <div
-          className={`text-sm text-center ${
-            status === "error" ? "text-red-500" : "text-green-500"
-          }`}
-        >
-          {hasMessage && formMessage}
-        </div>
+    <Card className="w-full overflow-hidden border border-gray-100 shadow-sm rounded-xl">
+      <CardHeader className="px-8 pt-8 pb-4 text-center space-y-1.5">
+        <CardTitle className="text-2xl font-semibold tracking-tight">Create your account</CardTitle>
+        <CardDescription className="text-gray-500">
+          Join Plattr to connect with local dining deals
+        </CardDescription>
+        {hasMessage && (
+          <div
+            className={`text-sm mt-2 px-3 py-1.5 rounded-md ${
+              status === "error" 
+                ? "bg-red-50 text-red-600" 
+                : "bg-green-50 text-green-600"
+            }`}
+          >
+            {formMessage}
+          </div>
+        )}
       </CardHeader>
-      <CardContent className="px-10 py-8">
+
+      <CardContent className="px-8 pt-2 pb-8">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            <div className="grid gap-6">
-              <div className="grid gap-2">
-                <FormField
-                  control={form.control}
-                  name="fullName"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your name" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700">Full Name</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="Enter your name" 
+                      className="h-11 bg-gray-50 border-gray-200 focus:border-[#0070C9] focus:ring focus:ring-blue-100 rounded-lg transition-all" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="grid gap-2">
-                <FormField
-                  control={form.control}
-                  name="email"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input placeholder="Enter your email" {...field} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            <FormField
+              control={form.control}
+              name="email"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className="text-gray-700">Email</FormLabel>
+                  <FormControl>
+                    <Input 
+                      placeholder="you@example.com" 
+                      type="email"
+                      className="h-11 bg-gray-50 border-gray-200 focus:border-[#0070C9] focus:ring focus:ring-blue-100 rounded-lg transition-all" 
+                      {...field} 
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <div className="grid gap-2">
-                <FormField
-                  control={form.control}
-                  name="password"
-                  render={({ field }) => (
-                    <FormItem>
-                      <div className="flex items-center justify-between">
-                        <FormLabel>Password</FormLabel>
-                      </div>
-                      <FormControl>
-                        <Input
-                          type="password"
-                          placeholder="Enter your password"
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div>
+            <FormField
+              control={form.control}
+              name="password"
+              render={({ field }) => (
+                <FormItem>
+                  <div className="flex items-center justify-between">
+                    <FormLabel className="text-gray-700">Password</FormLabel>
+                  </div>
+                  <FormControl>
+                    <Input
+                      type="password"
+                      placeholder="Create a secure password"
+                      className="h-11 bg-gray-50 border-gray-200 focus:border-[#0070C9] focus:ring focus:ring-blue-100 rounded-lg transition-all" 
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              <Button
-                type="submit"
-                className="mt-4 w-full"
-                tabIndex={4}
-                disabled={isSubmitting}
-              >
-                {isSubmitting && (
-                  <LoaderCircle className="h-4 w-4 animate-spin" />
-                )}
-                Log in
-              </Button>
-            </div>
-
-            <div className="text-muted-foreground text-center text-sm">
-              You have an account?{" "}
-              <Link href={"/sign-in"} tabIndex={5}>
+            <Button
+              type="submit"
+              className="w-full h-11 bg-[#0070C9] hover:bg-[#005EA3] text-white rounded-lg transition-all font-medium"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? (
+                <LoaderCircle className="h-4 w-4 animate-spin mr-2" />
+              ) : null}
+              Create Account
+            </Button>
+            
+            <div className="text-center text-sm text-gray-500">
+              Already have an account?{" "}
+              <Link href="/sign-in" className="text-[#0070C9] hover:underline font-medium">
                 Sign in
               </Link>
             </div>
           </form>
         </Form>
       </CardContent>
-      {/* <CardFooter className="flex flex-col gap-y-4">
-        <div className="text-muted-foreground text-center text-sm">
-          Or continue with
-        </div>
-        <div className="flex items-center justify-center gap-x-4">
-          <GitHubSignInButton />
-          <GoogleSignInButton />
-          <FacebookSignInButton />
-        </div>
-      </CardFooter> */}
     </Card>
   );
 };

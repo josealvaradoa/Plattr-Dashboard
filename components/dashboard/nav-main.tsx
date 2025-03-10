@@ -17,11 +17,6 @@ const mainNavItems: NavItem[] = [
         icon: LayoutGrid,
     },
     {
-        title: 'Attendees',
-        url: '/attendees',
-        icon: Users,
-    },
-    {
         title: 'Settings',
         url: '/settings',
         icon: SettingsIcon,

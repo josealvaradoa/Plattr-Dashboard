@@ -227,48 +227,4 @@ export const signInWithFacebookAction = async () => {
   return { url: data.url };
 };
 
-export type Attendee = {
-  id: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-  created_at: string;
-  phone?: string;
-  company?: string;
-  position?: string;
-  status?: 'active' | 'inactive';
-  // Add any other relevant fields
-};
 
-export const getAttendeesAction = async () => {
-  const supabase = await createClient();
-
-  const { data: attendees, error } = await supabase
-    .from('attendees')
-    .select('*')
-    .order('created_at', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching attendees:', error.message);
-    return { error: error.message };
-  }
-
-  return { attendees };
-};
-
-export const getAttendeeByIdAction = async (id: string) => {
-  const supabase = await createClient();
-
-  const { data: attendee, error } = await supabase
-    .from('attendees')
-    .select('*')
-    .eq('id', id)
-    .single();
-
-  if (error) {
-    console.error('Error fetching attendee:', error.message);
-    return { error: error.message };
-  }
-
-  return { attendee };
-};
