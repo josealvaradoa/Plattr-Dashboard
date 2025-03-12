@@ -1,6 +1,6 @@
 export const steps = [
     "Basic Info",
-    "Location",
+    "Business Primary Location",
     "Cuisine & Features",
     "Operating Hours",
     "Images",

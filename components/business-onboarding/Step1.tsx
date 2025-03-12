@@ -7,16 +7,16 @@ import { Label } from "@/components/ui/label";
 
 const Step1 = () => {
   const { register, setValue, watch } = useFormContext();
-
+  
   return (
     <div className="space-y-4">
-      <Label className="block text-sm font-medium">Business Name</Label>
+      <Label>Business Name</Label>
       <Input {...register("name")} placeholder="Enter business name" />
 
-      <Label className="block text-sm font-medium">Description</Label>
+      <Label>Description</Label>
       <Input {...register("description")} placeholder="Describe your business" />
 
-      <Label className="block text-sm font-medium">Price Level</Label>
+      <Label>Price Level</Label>
       <Select
         onValueChange={(value) => setValue("priceLevel", value)}
         defaultValue={watch("priceLevel")}
