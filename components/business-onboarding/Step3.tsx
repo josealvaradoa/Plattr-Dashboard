@@ -99,7 +99,7 @@ const Step3 = ({ cuisineOptions, featureTags }: Step3Props) => {
                 />
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {filteredCuisines.map((cuisine: string) => (
                   <label
                     key={cuisine}
@@ -112,9 +112,9 @@ const Step3 = ({ cuisineOptions, featureTags }: Step3Props) => {
                       id={`cuisine-${cuisine}`}
                       checked={selectedCuisines.includes(cuisine)}
                       onCheckedChange={(checked) => handleCuisineToggle(cuisine, checked as boolean)}
-                      className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                      className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 flex-shrink-0"
                     />
-                    <span className="text-sm truncate">{cuisine}</span>
+                    <span className="text-sm">{cuisine}</span>
                   </label>
                 ))}
               </div>
@@ -149,7 +149,7 @@ const Step3 = ({ cuisineOptions, featureTags }: Step3Props) => {
                 />
               </div>
               
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {filteredFeatures.map((feature: string) => (
                   <label
                     key={feature}
@@ -162,9 +162,9 @@ const Step3 = ({ cuisineOptions, featureTags }: Step3Props) => {
                       id={`feature-${feature}`}
                       checked={selectedFeatures.includes(feature)}
                       onCheckedChange={(checked) => handleFeatureToggle(feature, checked as boolean)}
-                      className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600"
+                      className="data-[state=checked]:bg-blue-600 data-[state=checked]:border-blue-600 flex-shrink-0"
                     />
-                    <span className="text-sm truncate">{feature}</span>
+                    <span className="text-sm">{feature}</span>
                   </label>
                 ))}
               </div>

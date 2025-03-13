@@ -9,6 +9,8 @@ import Step1 from "./Step1";
 import Step2 from "./Step2";
 import Step3 from "./Step3";
 import Step4 from "./Step4";
+import Step5 from "./Step5";
+import Step6 from "./Step6";
 import { steps } from "./steps";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -34,28 +36,38 @@ const BusinessInfoForm = () => {
       hours: {},
       images: [],
     },
+    mode: "onChange", // This helps validate fields as they change
   });
 
   const handleNext = async () => {
     const fieldsToValidate = {
-      0: ["name", "description", "priceLevel"],
+      0: ["name", "description", "priceLevel", "phone", "email"],
       1: ["address"],
       2: ["cuisineTypes", "tags"],
       3: ["hours"],
+      4: ["images"],
+      5:[]
     } as const;
     
     const currentStepFields = fieldsToValidate[step as keyof typeof fieldsToValidate] || [];
     const isValid = await methods.trigger(currentStepFields);
-    console.log("Validation status for step", step, isValid);
+    console.log("Validation status for step", step, isValid, "current Values:  ", methods.getValues());
     if (isValid) setStep((prev) => prev + 1);
   };
 
   const handleBack = () => setStep((prev) => prev - 1);
+  
   const onSubmit = (data: any) => {
+    // We no longer need to check the step since the submit button is only shown on step 5
+    // The form will only be submitted when the Submit button is explicitly clicked
     console.log("Form Data Submitted:", data);
     console.log("Selected Cuisines:", data.cuisineTypes);
     console.log("Selected Features:", data.tags);
+    console.log("Selected Images:", data.images);
     toast.success("Business info submitted!");
+    
+    // If you need to navigate to a success page after submission
+    // setStep(6); // Navigate to "Success" step if needed
   };
 
   // Determine if we're on Step3 to adjust the width
@@ -74,23 +86,44 @@ const BusinessInfoForm = () => {
           isStep3 ? "px-6 sm:px-8" : "px-4 sm:px-6"
         )}>
           <FormProvider {...methods}>
-            <form onSubmit={methods.handleSubmit(onSubmit)} className="space-y-6">
+            <form 
+              onSubmit={e => {
+                e.preventDefault();
+              }} 
+              className="space-y-6"
+            >
               {step === 0 && <Step1 />}
               {step === 1 && <Step2 />}
               {step === 2 && <Step3 cuisineOptions={cuisineOptions} featureTags={featureTags} />}
               {step === 3 && <Step4 />}
+              {step === 4 && <Step5 />}
+              {step === 5 && <Step6 />}
               <div className="flex justify-between mt-6">
                 {step > 0 && (
-                  <Button variant="outline" onClick={handleBack} className="w-32">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={handleBack} 
+                    className="w-32"
+                  >
                     Back
                   </Button>
                 )}
-                {step === steps.length - 1 ? (
-                  <Button type="submit" className="w-32 bg-blue-600 hover:bg-blue-700 text-white">
+
+                {step === 5 ? (
+                  <Button 
+                    type="button"
+                    onClick={() => methods.handleSubmit(onSubmit)()}
+                    className="w-32 bg-blue-600 hover:bg-blue-700 text-white"
+                  >
                     Submit
                   </Button>
                 ) : (
-                  <Button onClick={handleNext} className="w-32 bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button 
+                    type="button" 
+                    onClick={handleNext} 
+                    className="w-32 bg-blue-600 hover:bg-blue-700 text-white"
+                  >
                     Next
                   </Button>
                 )}

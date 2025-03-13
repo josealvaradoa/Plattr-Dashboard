@@ -5,4 +5,5 @@ export const steps = [
     "Operating Hours",
     "Images",
     "Review & Submit",
+    "Success"
   ];

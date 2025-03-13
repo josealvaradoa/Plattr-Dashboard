@@ -1,5 +1,10 @@
 import { z } from "zod";
 
+// Custom validator for File objects
+const fileSchema = z.custom<File>((val) => val instanceof File, {
+  message: "Expected a file"
+});
+
 export const businessOnboardingSchema = z.object({
   name: z.string().min(2, "Business name is required").max(100),
   description: z.string().min(10, "Description must be at least 10 characters").max(500),
@@ -20,5 +25,11 @@ export const businessOnboardingSchema = z.object({
       close: z.string().regex(/^([01]\d|2[0-3]):([0-5]\d)$/, "Invalid time format"),
     })
   ),
-  images: z.array(z.string().url("Invalid image URL")).optional(),
+  // Allow either file objects or string URLs
+  images: z.array(
+    z.union([
+      fileSchema, 
+      z.string().url("Invalid image URL")
+    ])
+  ).optional(),
 });
